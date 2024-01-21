@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "pyapp-bug"
+version = "0.1.0"
+description = ""
+authors = ["Noah May <noahmouse2011@gmail.com>"]
+readme = "README.md"
+packages = [{ include = "pyapp_bug" }]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.scripts]
+pyapp_bug = "pyapp_bug.entry:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
