@@ -9,10 +9,11 @@ build-working: build-wheel
 	mkdir -p dist && mv pyapp-latest/target/release/pyapp dist/pyapp_bug
 
 .PHONE: build-bugged
-build-bugged: build-wheel
+build-bugged: build-wheel ./dist/python-3.10.13.tar.gz
 	cd pyapp-latest && \
 		PYAPP_PROJECT_PATH=../$(wildcard dist/*.whl) \
-		PYAPP_DISTRIBUTION_PATH=./python-3.10.13.tar.gz \
+		PYAPP_DISTRIBUTION_PATH=../dist/python-3.10.13.tar.gz \
+		PYAPP_DISTRIBUTION_EMBED=true \
 		PYAPP_EXEC_SPEC=pyapp_bug.entry:main \
 		cargo build --release
 	mkdir -p dist && mv pyapp-latest/target/release/pyapp dist/pyapp_bug
@@ -20,6 +21,9 @@ build-bugged: build-wheel
 .PHONY: build-wheel
 build-wheel:
 	poetry build -f wheel
+
+./dist/python-3.10.13.tar.gz:
+	tar --transform="s:.*/::" -chzf dist/python-3.10.13.tar.gz ~/.asdf/installs/python/3.10.13/bin/python
 
 .PHONY: init
 init:
